@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%; /* Very dark blue-gray */
+    --foreground: 210 40% 98%; /* Almost white */
+
+    --card: 217.2 32.6% 17.5%; /* Dark blue-gray for cards */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 217.2 32.6% 17.5%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217.2 91.2% 59.8%; /* Bright blue */
+    --primary-foreground: 222.2 84% 4.9%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 217.2 91.2% 59.8%;
+
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 217.2 91.2% 59.8%;
+    --sidebar-primary-foreground: 222.2 84% 4.9%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  .dark {
+    color-scheme: dark;
+  }
+
+  /* Improve dark mode gradient backgrounds */
+  .dark .bg-gradient-to-br.from-blue-50.via-indigo-50.to-purple-50 {
+    @apply from-slate-900 via-slate-800 to-slate-900;
+  }
+
+  /* Improve header styling in dark mode */
+  .dark .bg-white\/90 {
+    @apply bg-slate-900/95;
+  }
+
+  .dark .border-gray-200 {
+    @apply border-slate-700;
+  }
+
+  /* Improve card styling in dark mode */
+  .dark .bg-white {
+    @apply bg-slate-800;
+  }
+
+  .dark .bg-gray-50 {
+    @apply bg-slate-800;
+  }
+
+  .dark .bg-gray-100 {
+    @apply bg-slate-700;
+  }
+
+  /* Improve text contrast in dark mode */
+  .dark .text-gray-900 {
+    @apply text-slate-100;
+  }
+
+  .dark .text-gray-800 {
+    @apply text-slate-200;
+  }
+
+  .dark .text-gray-700 {
+    @apply text-slate-300;
+  }
+
+  .dark .text-gray-600 {
+    @apply text-slate-400;
+  }
+
+  .dark .text-gray-500 {
+    @apply text-slate-500;
+  }
+
+  /* Improve colored backgrounds in dark mode */
+  .dark .bg-green-50 {
+    @apply bg-green-900/20;
+  }
+
+  .dark .bg-green-100 {
+    @apply bg-green-800/30;
+  }
+
+  .dark .border-green-200 {
+    @apply border-green-700;
+  }
+
+  .dark .text-green-600 {
+    @apply text-green-400;
+  }
+
+  .dark .text-green-700 {
+    @apply text-green-300;
+  }
+
+  .dark .text-green-800 {
+    @apply text-green-200;
+  }
+
+  /* Improve other colored elements */
+  .dark .bg-blue-100 {
+    @apply bg-blue-900/30;
+  }
+
+  .dark .text-blue-800 {
+    @apply text-blue-200;
+  }
+
+  .dark .bg-cyan-100 {
+    @apply bg-cyan-900/30;
+  }
+
+  .dark .text-cyan-800 {
+    @apply text-cyan-200;
+  }
+
+  .dark .bg-purple-100 {
+    @apply bg-purple-900/30;
+  }
+
+  .dark .text-purple-800 {
+    @apply text-purple-200;
+  }
+
+  .dark .bg-orange-100 {
+    @apply bg-orange-900/30;
+  }
+
+  .dark .text-orange-800 {
+    @apply text-orange-200;
+  }
+
+  /* Improve hover states in dark mode */
+  .dark .hover\:bg-gray-50:hover {
+    @apply hover:bg-slate-700;
+  }
+
+  .dark .hover\:bg-gray-100:hover {
+    @apply hover:bg-slate-600;
+  }
+}
