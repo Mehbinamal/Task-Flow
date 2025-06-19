@@ -6,6 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { UserPlus, Mail, Lock } from 'lucide-react';
+import axios from 'axios';
+import { toast } from '@/components/ui/sonner';
+import { useNavigate } from 'react-router-dom';
 
 interface SignupForm {
   email: string;
@@ -15,7 +18,6 @@ interface SignupForm {
 
 const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
-  
   const form = useForm<SignupForm>({
     defaultValues: {
       email: '',
@@ -23,15 +25,26 @@ const Signup = () => {
       confirmPassword: '',
     },
   });
+  const navigate = useNavigate();
 
   const onSubmit = async (data: SignupForm) => {
     setIsLoading(true);
     console.log('Signup attempt:', data.email);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await axios.post('http://localhost:3000/auth/signup', data);
+      console.log('Signup response:', response.data);
+      if (response.status === 201) {
+        toast.success('Signup successful! You can now log in.');
+        navigate('/login');
+      } else {
+        toast.error('Signup failed. Please try again.');
+      }
+    } catch (error: any) {
+      console.error('Signup error:', error);
+      toast.error(error?.response?.data?.error || 'Signup failed. Please try again.');
+    } finally {
       setIsLoading(false);
-      // TODO: Implement actual authentication
-    }, 1000);
+    }
   };
 
   return (
