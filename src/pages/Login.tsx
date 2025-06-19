@@ -6,6 +6,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { LogIn, Mail, Lock } from 'lucide-react';
+import { auth } from '@/lib/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { toast } from '@/hooks/use-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface LoginForm {
   email: string;
@@ -14,7 +18,7 @@ interface LoginForm {
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
-  
+  const navigate = useNavigate();
   const form = useForm<LoginForm>({
     defaultValues: {
       email: '',
@@ -24,12 +28,21 @@ const Login = () => {
 
   const onSubmit = async (data: LoginForm) => {
     setIsLoading(true);
-    console.log('Login attempt:', data.email);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      toast({
+        title: 'Login successful',
+        description: `Welcome back, ${userCredential.user.email}!`,
+      });
+      navigate('/dashboard');
+    } catch (error: any) {
+      toast({
+        title: 'Login failed',
+        description: error.message || 'Invalid email or password',
+      });
+    } finally {
       setIsLoading(false);
-      // TODO: Implement actual authentication
-    }, 1000);
+    }
   };
 
   return (
