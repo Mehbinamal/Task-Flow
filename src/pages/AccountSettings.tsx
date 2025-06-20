@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -8,12 +7,11 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useForm } from 'react-hook-form';
-import { ArrowLeft, Camera, Save, User, Mail, Lock } from 'lucide-react';
+import { ArrowLeft, Camera, Save, User, Lock } from 'lucide-react';
 import { ModeToggle } from '@/components/ModeToggle';
 
 interface ProfileForm {
   name: string;
-  email: string;
   bio: string;
 }
 
@@ -30,7 +28,6 @@ const AccountSettings = () => {
   const profileForm = useForm<ProfileForm>({
     defaultValues: {
       name: 'John Doe',
-      email: 'john.doe@example.com',
       bio: 'Productivity enthusiast and task management expert.',
     },
   });
@@ -108,7 +105,7 @@ const AccountSettings = () => {
                     </Button>
                   </div>
                   <h3 className="font-semibold">John Doe</h3>
-                  <p className="text-sm text-muted-foreground">john.doe@example.com</p>
+                  <p className="text-sm text-muted-foreground">{localStorage.getItem('email')}</p>
                 </div>
                 
                 <nav className="space-y-2">
@@ -161,27 +158,6 @@ const AccountSettings = () => {
                             <FormLabel>Full Name</FormLabel>
                             <FormControl>
                               <Input {...field} placeholder="Enter your full name" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={profileForm.control}
-                        name="email"
-                        rules={{
-                          required: 'Email is required',
-                          pattern: {
-                            value: /\S+@\S+\.\S+/,
-                            message: 'Invalid email address',
-                          },
-                        }}
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Email Address</FormLabel>
-                            <FormControl>
-                              <Input {...field} type="email" placeholder="Enter your email" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

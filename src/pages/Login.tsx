@@ -30,6 +30,10 @@ const Login = () => {
     setIsLoading(true);
     try {
       const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const token = await userCredential.user.getIdToken();
+      const email = userCredential.user.email;
+      localStorage.setItem('token', token);
+      localStorage.setItem('email', email);
       toast({
         title: 'Login successful',
         description: `Welcome back, ${userCredential.user.email}!`,

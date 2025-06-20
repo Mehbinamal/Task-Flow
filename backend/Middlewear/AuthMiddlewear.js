@@ -1,3 +1,4 @@
+const { admin } = require("../model/db");
 
 // Middleware to validate signup request body
 const validateSignUp = (req, res, next) => {
@@ -24,6 +25,23 @@ const validateSignUp = (req, res, next) => {
     next();
 };
 
+const verifyToken = async (req, res, next) => {
+    const authHeader = req.headers.authorization || "";
+    const token = authHeader.split(" ")[1]; // Bearer <token>
+  
+    if (!token) return res.status(401).json({ error: "Token missing" });
+  
+    try {
+      const decoded = await admin.auth().verifyIdToken(token);
+      req.uid = decoded.uid;
+      next();
+    } catch (err) {
+      console.error("Token verification failed:", err);
+      res.status(401).json({ error: "Unauthorized" });
+    }
+  };
+
 module.exports = {
     validateSignUp,
+    verifyToken
 }

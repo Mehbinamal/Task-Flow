@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { ModeToggle } from './ModeToggle';
+import { toast } from 'sonner';
 
 interface DashboardHeaderProps {
   activeView: 'tasks' | 'schedule' | 'focus' | 'analytics' | 'routines' | 'wellness' | 'summary';
@@ -40,8 +41,10 @@ export const DashboardHeader = ({ activeView, setActiveView }: DashboardHeaderPr
   ] as const;
 
   const handleLogout = () => {
-    // Add logout logic here
-    console.log('Logout clicked');
+    navigate('/');
+    localStorage.removeItem('token');
+    localStorage.removeItem('email');
+    toast.success('Logged out successfully');
   };
 
   const handleSettings = () => {
