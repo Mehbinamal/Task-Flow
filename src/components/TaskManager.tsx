@@ -9,6 +9,7 @@ import { TaskList } from './TaskList';
 import { Task } from '@/types/task';
 import { generateRecurringTaskInstances } from '@/utils/recurringTasks';
 import { addDays, startOfDay, isToday, isSameDay } from 'date-fns';
+import axios from 'axios';
 
 interface TaskManagerProps {
   tasks: Task[];
@@ -23,6 +24,21 @@ export const TaskManager = ({ tasks, setTasks }: TaskManagerProps) => {
   // Generate new recurring task instances when component mounts and daily
   useEffect(() => {
     generateUpcomingRecurringTasks();
+    const fetchTasks = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:3000/task/get-tasks",{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setTasks(response.data.tasks);
+      } catch (error) {
+        console.error("Failed to fetch tasks:", error);
+        setTasks([]);
+      }
+    };
+    fetchTasks();
   }, []);
 
   const addTask = (task: Omit<Task, 'id' | 'completed' | 'createdAt'>) => {

@@ -26,20 +26,24 @@ const validateSignUp = (req, res, next) => {
 };
 
 const verifyToken = async (req, res, next) => {
-    const authHeader = req.headers.authorization || "";
-    const token = authHeader.split(" ")[1]; // Bearer <token>
-  
-    if (!token) return res.status(401).json({ error: "Token missing" });
-  
     try {
+      const authHeader = req.headers.authorization || "";
+      const token = authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+  
+      if (!token) {
+        return res.status(401).json({ error: "Token missing" });
+      }
+  
       const decoded = await admin.auth().verifyIdToken(token);
-      req.uid = decoded.uid;
+  
+      req.uid = decoded.uid; // ✅ Attach UID here
       next();
-    } catch (err) {
-      console.error("Token verification failed:", err);
-      res.status(401).json({ error: "Unauthorized" });
+    } catch (error) {
+      console.error("Token verification failed:", error.message);
+      return res.status(401).json({ error: "Unauthorized" });
     }
   };
+  
 
 module.exports = {
     validateSignUp,
